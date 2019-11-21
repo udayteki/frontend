@@ -16,7 +16,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head._
 import html.HtmlPageHelpers.{ContentCSSFile}
 import views.html.stacked
-import services.dotcomponents.ArticlePicker.dcrCouldRender
+import services.dotcomponents.ArticlePicker.{dcrCouldRender, dcrCouldRender2}
 
 object StoryHtmlPage {
 
@@ -33,6 +33,11 @@ object StoryHtmlPage {
   def htmlDcrCouldRender(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
     val thisDcrCouldRender: Boolean = dcrCouldRender(pageWithStoryPackage, request)
     Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
+  }
+
+  def pascal(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
+    val thisDcrCouldRender2: String = dcrCouldRender2(pageWithStoryPackage)
+    Html(s"<pascal>thisDcrCouldRender2: ${thisDcrCouldRender2.toString}</pascal>")
   }
 
   def html(
@@ -55,7 +60,8 @@ object StoryHtmlPage {
         styles(allStyles),
         fixIEReferenceErrors(),
         inlineJSBlocking(),
-        htmlDcrCouldRender(pageWithStoryPackage, request)
+        htmlDcrCouldRender(pageWithStoryPackage, request),
+        pascal(pageWithStoryPackage, request)
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),

@@ -4,8 +4,9 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, DotcomRenderingAdvertisements}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, TextBlockElement, TweetBlockElement, RichLinkBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement}
 import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 import views.support.Commercial
 
 object ArticlePageChecks {
@@ -118,8 +119,15 @@ object ArticlePicker {
   def dcrCouldRender(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
     val whitelistFeatures = featureWhitelist(page, request)
     val isSupported = whitelistFeatures.forall({ case (test, isMet) => isMet})
-
     isSupported
+  }
+
+  def dcrCouldRender2(page: PageWithStoryPackage)(implicit request: RequestHeader): String = {
+    val whitelistFeatures = featureWhitelist(page, request)
+    val isSupported = whitelistFeatures.forall({ case (test, isMet) => isMet})
+    val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
+    val isCommercialBetaUser = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
+    s"dcrCouldRenderValue: ${isSupported}; isEnabled: ${isEnabled}; isCommercialBetaUser:${isCommercialBetaUser}"
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
