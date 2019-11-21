@@ -116,6 +116,14 @@ object DotcomRendering {
     whitelistFeatures.forall({ case (_, isMet) => isMet})
   }
 
+  def dcrCouldRender2(page: PageWithStoryPackage)(implicit request: RequestHeader): String = {
+    val whitelistFeatures = featureWhitelist(page, request)
+    val isSupported = whitelistFeatures.forall({ case (test, isMet) => isMet})
+    val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
+    val isCommercialBetaUser = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
+    s"dcrCouldRenderValue: ${isSupported}; isEnabled: ${isEnabled}; isCommercialBetaUser:${isCommercialBetaUser}"
+  }
+
   def pageWithStoryPackageIsDotcomRenderingEligible(page: PageWithStoryPackage)(implicit request: RequestHeader): Boolean = {
     // Indicates whether the page is technically supported by DCR and isEligible for the current request
     val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
