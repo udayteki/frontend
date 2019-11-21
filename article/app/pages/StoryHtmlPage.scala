@@ -37,7 +37,7 @@ object StoryHtmlPage {
 
   def pascal(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
     val thisDcrCouldRender2: String = dcrCouldRender2(pageWithStoryPackage)
-    Html(s"<pascal>thisDcrCouldRender2: ${thisDcrCouldRender2.toString}</pascal>")
+    Html(s"<script>pascal: ${thisDcrCouldRender2.toString}</script>")
   }
 
   def html(
