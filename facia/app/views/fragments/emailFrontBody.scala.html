@@ -1,3 +1,4 @@
+@import model.ThisIsEurope
 @()(implicit page: model.PressedPage, request: RequestHeader)
 
 @import layout.slices.EmailLayouts
@@ -145,7 +146,15 @@
     @cardStyle match {
         case EmailHidden => { }
         case EmailFreeText if card.displayElement.isEmpty => {
-            @freeText(card.header.headline)
+            @page.email match {
+                case Some(ThisIsEurope) => {
+                    @println("THIS... IS... EUROPE")
+                    @freeText(card.header.headline)
+                }
+                case _ => {
+                    @freeText(card.header.headline)
+                }
+            }
         }
         case EmailFreeText => {
             @freeTextWithImage(card, collectionName)
@@ -205,6 +214,7 @@
     }}
 
     @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
+
         @if(cardIndex == 0) {
             @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).firstCard, collection.branding.isDefined, collection.displayName)
         } else {
