@@ -28,6 +28,8 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { testTest } from 'common/modules/experiments/tests/commercial-test';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
@@ -144,6 +146,13 @@ export const bootCommercial = (): Promise<void> => {
     window.googletag = {
         cmd: [],
     };
+
+    if (isInVariantSynchronous(testTest, 'control')) {
+        console.log('*** Is in control');
+    }
+    if (isInVariantSynchronous(testTest, 'variant')) {
+        console.log('*** Is in variant');
+    }
 
     return loadHostedBundle()
         .then(loadModules)
