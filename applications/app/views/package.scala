@@ -42,8 +42,7 @@ object GalleryCaptionCleaners {
         tags = page.gallery.content.tags.tags.map(_.id)))
 
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) { case (html, cleaner) => cleaner.clean(html) }
-    cleanedHtml.outputSettings().prettyPrint(false)
-    Html(cleanedHtml.body.html)
+    Html(cleanedHtml.toString)
   }
 
 }
