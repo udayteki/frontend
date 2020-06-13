@@ -149,7 +149,8 @@ object BlockElement {
   private def videoDataFor(element: ApiBlockElement): Map[String, String] = {
     element.videoTypeData.map { d => Map(
       "caption" -> d.caption,
-      "url" -> d.url
+      "url" -> d.url,
+      "html" -> d.html
     ) collect { case (k, Some (v) ) => (k, v) }
     } getOrElse Map()
   }
