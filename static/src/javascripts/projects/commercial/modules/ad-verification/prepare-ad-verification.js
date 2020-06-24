@@ -3,6 +3,8 @@ import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { confiantCallbackTest } from 'common/modules/experiments/tests/confiant-callback';
 
 const errorHandler = (error: Error) => {
     // Looks like some plugins block ad-verification
@@ -74,7 +76,9 @@ export const init = (): Promise<void> => {
             { async: true }
         )
             .then(() => {
-                window.confiant.settings.callback = refreshBlockedSlotOnce;
+                if (isInVariantSynchronous(confiantCallbackTest, 'variant')) {
+                    window.confiant.settings.callback = refreshBlockedSlotOnce;
+                }
             })
             .catch(errorHandler);
     }

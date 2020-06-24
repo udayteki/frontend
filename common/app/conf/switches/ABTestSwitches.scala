@@ -168,6 +168,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-confiant-callback-on-blocked-ad",
+    "A/B test to test impact of the confiant callback triggered on a blocked ad",
+    owners = Seq(Owner.withGithub("buck06191")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 8, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-remote-epic-variants",
     "Serve epics from remote service for subset of audience",
     owners = Seq(Owner.withGithub("nicl")),

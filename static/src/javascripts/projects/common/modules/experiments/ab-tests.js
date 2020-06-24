@@ -15,6 +15,7 @@ import { signInGateCentesimus } from 'common/modules/experiments/tests/sign-in-g
 import { signInGateVii } from 'common/modules/experiments/tests/sign-in-gate-vii';
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 import { commercialRedplanet } from 'common/modules/experiments/tests/commercial-redplanet-aus';
+import { confiantCallbackTest } from './tests/confiant-callback';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -27,6 +28,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGatePatientia,
     signInGateVii,
     signInGateCentesimus,
+    confiantCallbackTest,
 ];
 
 export const priorityEpicTest: AcquisitionsABTest = remoteEpicVariants;
