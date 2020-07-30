@@ -77,6 +77,7 @@ class ArticleController(
       .map(responseFromHeadline)
   }
 
+  
   private def getJson(article: ArticlePage)(implicit request: RequestHeader): List[(String, Object)] = {
     val contentFieldsJson = if (request.forceDCR) List(
       "contentFields" -> Json.toJson(ContentFields(article.article)),
